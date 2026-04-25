@@ -32,6 +32,7 @@ export const Navbar = ({ session }: { session: any }) => {
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
     { name: "Categories", href: "/categories" },
+    { name: "Contact", href: "/contact" },
   ];
 
   if (!mounted) return null;
