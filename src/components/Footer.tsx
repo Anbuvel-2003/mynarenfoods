@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin, Globe, Send, Camera, MessageCircle, Share, Rss } from "lucide-react";
+import { CATEGORIES_DATA } from "@/constants/categories";
 
 export const Footer = () => {
   return (
@@ -41,23 +42,25 @@ export const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-8 tracking-tight">Quick Links</h4>
             <ul className="space-y-4">
-              <li><Link href="/products" className="text-sm text-text-muted hover:text-primary-500 transition-colors">All Products</Link></li>
-              <li><Link href="/deals" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Exclusive Deals</Link></li>
-              <li><Link href="/about" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Our Story</Link></li>
-              <li><Link href="/contact" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Contact Us</Link></li>
-              <li><Link href="/faq" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Help & FAQ</Link></li>
+              <li><Link href="/" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Home</Link></li>
+              <li><Link href="/about" className="text-sm text-text-muted hover:text-primary-500 transition-colors">About Us</Link></li>
+              <li><Link href="/categories" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Browse Categories</Link></li>
+              <li><Link href="/contact" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Contact Support</Link></li>
+              <li><Link href="/faq" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Privacy & Terms</Link></li>
             </ul>
           </div>
 
           {/* Categories */}
           <div>
-            <h4 className="text-lg font-bold mb-8 tracking-tight">Categories</h4>
+            <h4 className="text-lg font-bold mb-8 tracking-tight">Top Categories</h4>
             <ul className="space-y-4">
-              <li><Link href="/categories/electronics" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Electronics</Link></li>
-              <li><Link href="/categories/fashion" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Fashion</Link></li>
-              <li><Link href="/categories/grocery" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Grocery</Link></li>
-              <li><Link href="/categories/beauty" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Beauty</Link></li>
-              <li><Link href="/categories/furniture" className="text-sm text-text-muted hover:text-primary-500 transition-colors">Furniture</Link></li>
+              {CATEGORIES_DATA.slice(0, 5).map((cat) => (
+                <li key={cat.id}>
+                  <Link href={`/categories/${cat.id}`} className="text-sm text-text-muted hover:text-primary-500 transition-colors flex items-center gap-2">
+                    <span className="text-xs opacity-50">{cat.icon}</span> {cat.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -30,10 +30,8 @@ export const Navbar = ({ session }: { session: any }) => {
 
   const navLinks = [
     { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
     { name: "Categories", href: "/categories" },
-    { name: "Deals", href: "/deals" },
-    { name: "New Arrivals", href: "/new-arrivals" },
-    { name: "Contact", href: "/contact" },
   ];
 
   if (!mounted) return null;

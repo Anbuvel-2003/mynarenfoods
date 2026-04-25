@@ -12,6 +12,9 @@ import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/utils/cn";
 
+import { CATEGORIES_DATA } from "@/constants/categories";
+import { ProductCard } from "@/components/ProductCard";
+
 // --- Hero Slides ---
 const heroSlides = [
   {
@@ -44,16 +47,7 @@ const heroSlides = [
 ];
 
 // --- Mock Data ---
-const categories = [
-  { name: "Electronics", icon: "📱", color: "bg-blue-500/10 text-blue-500" },
-  { name: "Fashion", icon: "👕", color: "bg-purple-500/10 text-purple-500" },
-  { name: "Grocery", icon: "🍎", color: "bg-green-500/10 text-green-500" },
-  { name: "Beauty", icon: "💄", color: "bg-pink-500/10 text-pink-500" },
-  { name: "Furniture", icon: "🪑", color: "bg-amber-500/10 text-amber-500" },
-  { name: "Sports", icon: "⚽", color: "bg-red-500/10 text-red-500" },
-  { name: "Health", icon: "🏥", color: "bg-teal-500/10 text-teal-500" },
-  { name: "Books", icon: "📚", color: "bg-indigo-500/10 text-indigo-500" },
-];
+const categories = CATEGORIES_DATA.slice(0, 8);
 
 const offerProducts = [
   { id: 1, name: "Premium White Truffle Oil", price: 45, originalPrice: 60, rating: 4.9, discount: 25, image: "/product_truffle_oil_1777102262804.png" },
@@ -65,68 +59,9 @@ const offerProducts = [
 const latestProducts = [
   { id: 5, name: "Aged Balsamic Vinegar", price: 28, rating: 4.6, image: "/hero-food.png" },
   { id: 6, name: "Wildflower Honey", price: 15, rating: 4.9, image: "/hero-food.png" },
-  { id: 7, name: "Organic Quinoa", price: 10, rating: 4.5, image: "/hero-food.png" },
-  { id: 8, name: "Dark Roasted Coffee", price: 22, rating: 4.8, image: "/hero-food.png" },
+  { id: 7, name: "Organic Quinoa", price: 22, rating: 4.7, image: "/hero-food.png" },
+  { id: 8, name: "Artisan Sea Salt", price: 10, rating: 4.5, image: "/hero-food.png" },
 ];
-
-// --- Components ---
-
-const ProductCard = ({ product, showQuickView = false }: { product: any, showQuickView?: boolean }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    className="group relative card-premium overflow-hidden"
-  >
-    <div className="aspect-square relative overflow-hidden bg-section-bg">
-      <Image
-        src={product.image || "/hero-food.png"}
-        alt={product.name}
-        fill
-        className="object-cover group-hover:scale-110 transition-transform duration-700"
-      />
-      
-      {product.discount && (
-        <div className="absolute top-4 left-4 bg-accent-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
-          -{product.discount}% OFF
-        </div>
-      )}
-
-      <div className="absolute top-4 right-4 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300">
-        <button className="p-2 rounded-full bg-white/90 dark:bg-black/80 shadow-md hover:bg-primary-500 hover:text-white transition-all">
-          <Heart className="w-4 h-4" />
-        </button>
-        {showQuickView && (
-          <button className="p-2 rounded-full bg-white/90 dark:bg-black/80 shadow-md hover:bg-primary-500 hover:text-white transition-all">
-            <Eye className="w-4 h-4" />
-          </button>
-        )}
-      </div>
-
-      <div className="absolute inset-x-4 bottom-4 translate-y-16 group-hover:translate-y-0 transition-transform duration-300">
-        <Button className="w-full shadow-xl">
-          <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
-        </Button>
-      </div>
-    </div>
-
-    <div className="p-5">
-      <div className="flex items-center gap-1 mb-2">
-        <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-        <span className="text-xs font-bold">{product.rating}</span>
-      </div>
-      <h3 className="font-bold text-foreground mb-1 line-clamp-1 group-hover:text-primary-500 transition-colors">
-        {product.name}
-      </h3>
-      <div className="flex items-center gap-2">
-        <span className="text-lg font-bold text-primary-500">${product.price.toFixed(2)}</span>
-        {product.originalPrice && (
-          <span className="text-sm text-text-muted line-through">${product.originalPrice.toFixed(2)}</span>
-        )}
-      </div>
-    </div>
-  </motion.div>
-);
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ h: 24, m: 0, s: 0 });
@@ -325,13 +260,15 @@ export default function Home() {
                 transition={{ delay: i * 0.05 }}
                 className="flex-shrink-0 group cursor-pointer"
               >
-                <div className={cn(
-                  "w-24 h-24 sm:w-32 sm:h-32 glass-card rounded-3xl flex flex-col items-center justify-center gap-3 transition-all duration-300 group-hover:translate-y-[-8px] shadow-sm",
-                  cat.color
-                )}>
-                  <span className="text-3xl sm:text-4xl group-hover:scale-125 transition-transform">{cat.icon}</span>
-                  <span className="text-xs sm:text-sm font-bold text-foreground">{cat.name}</span>
-                </div>
+                <Link href={`/categories/${cat.id}`}>
+                  <div className={cn(
+                    "w-24 h-24 sm:w-32 sm:h-32 glass-card rounded-3xl flex flex-col items-center justify-center gap-3 transition-all duration-300 group-hover:translate-y-[-8px] shadow-sm",
+                    cat.color
+                  )}>
+                    <span className="text-3xl sm:text-4xl group-hover:scale-125 transition-transform">{cat.icon}</span>
+                    <span className="text-xs sm:text-sm font-bold text-foreground text-center px-2">{cat.name}</span>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
